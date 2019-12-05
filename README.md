@@ -1,6 +1,6 @@
 # React component for Cloudflare Image resizing
 
-This is a small wrapper of HTML's <img> element with an extra query for [Cloudflare Image](https://developers.cloudflare.com/images).
+This is a small wrapper of HTML's `<img>` element with an extra query for [Cloudflare Image](https://developers.cloudflare.com/images).
 It is only useful when your application is behind Cloudflare's network.
 
 ## TODOs list
