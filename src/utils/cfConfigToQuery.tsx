@@ -1,17 +1,31 @@
-import { CloudflareImageParameters } from "../@types/index.d";
+import { CloudflareImageParameters, Gravity } from "../@types/CloudflareImage";
+
+const gravityToQuery = (gravity: "side" | Gravity): string =>
+  `gravity=${gravity === "side" ? "side" : `${gravity.x}x${gravity.y}`}`;
 
 const cfImageParametersToQuery = (
   parameters: CloudflareImageParameters
 ): string => {
-  const { src, ...parametersWithoutSrc } = parameters;
+  const { gravity, ...parametersWithoutGravity } = parameters;
 
-  return `?${(Object.keys(parametersWithoutSrc) as Array<
-    keyof typeof parametersWithoutSrc
+  const query = `?${(Object.keys(parametersWithoutGravity) as Array<
+    keyof typeof parametersWithoutGravity
   >)
-    .map(
-      parameter => `${parameter}=${encodeURIComponent(parameters[parameter])}`
+    .filter(
+      parameter =>
+        Boolean(parametersWithoutGravity[parameter]) ||
+        parametersWithoutGravity[parameter] === 0
     )
-    .join("&")}/${src}`.trim();
+    .map(
+      parameter =>
+        `${parameter}=${encodeURIComponent(
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          parametersWithoutGravity[parameter]!
+        )}`
+    )
+    .join("&")}`.trim();
+
+  return gravity ? `${query}&${gravityToQuery(gravity)}` : query;
 };
 
 export default cfImageParametersToQuery;

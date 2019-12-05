@@ -1,5 +1,4 @@
 export interface CloudflareImageParameters {
-  src: string;
   width?: number;
   height?: number;
   fit?: FitMode;

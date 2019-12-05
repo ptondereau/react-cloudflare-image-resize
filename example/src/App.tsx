@@ -6,7 +6,14 @@ class App extends Component {
   render() {
     return (
       <div>
-        <CloudflareImage src="images/test.png" />
+        <CloudflareImage
+          src="images/test.png"
+          cloudflareParameters={{
+            fit: 'auto',
+            width: 40,
+            height: 40,
+          }}
+        />
       </div>
     );
   }

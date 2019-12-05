@@ -1,7 +1,24 @@
 import React from "react";
-import { CloudflareImageParameters } from "../../@types/index.d";
+import { CloudflareImageParameters } from "../../@types/CloudflareImage";
 import cfImageParametersToQuery from "../../utils/cfConfigToQuery";
 
-export const CloudflareImage: React.FC<CloudflareImageParameters> = props => (
-  <img src={`/cdn-cgi/image/${cfImageParametersToQuery(props)}`} />
-);
+interface CloudflareImageProps
+  extends React.DetailedHTMLProps<
+    React.ImgHTMLAttributes<HTMLImageElement>,
+    HTMLImageElement
+  > {
+  cloudflareParameters: CloudflareImageParameters;
+}
+
+export const CloudflareImage: React.FC<CloudflareImageProps> = props => {
+  const { cloudflareParameters, src, ...imgProps } = props;
+
+  return (
+    <img
+      src={`/cdn-cgi/image/${cfImageParametersToQuery(
+        cloudflareParameters
+      )}/${src}`}
+      {...imgProps}
+    />
+  );
+};
